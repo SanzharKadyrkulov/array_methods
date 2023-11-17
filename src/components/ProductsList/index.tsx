@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Pagination } from "@mui/material";
 import { useProductContext } from "../../contexts/ProductsContext";
 import ProductItem from "./ProductItem";
 
 const ProductsList = () => {
-	const { products } = useProductContext();
+	const { onePageItems, pageTotalCount, currentPage, changePage } =
+		useProductContext();
 
 	return (
 		<Container>
@@ -17,9 +18,17 @@ const ProductsList = () => {
 					mt: 3,
 				}}
 			>
-				{products.map((product) => (
+				{onePageItems.map((product) => (
 					<ProductItem key={product.id} product={product} />
 				))}
+			</Box>
+			<Box sx={{ maxWidth: "max-content", margin: "20px auto" }}>
+				<Pagination
+					onChange={(e, page) => changePage(page)}
+					count={pageTotalCount}
+					page={currentPage}
+					color="primary"
+				/>
 			</Box>
 		</Container>
 	);
